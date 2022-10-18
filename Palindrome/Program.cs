@@ -1,4 +1,6 @@
-﻿namespace Palindrome;
+﻿using System.Collections.Generic;
+
+namespace Palindrome;
 public class Program
 {
     static void Main(string[] args)
@@ -11,9 +13,14 @@ public class Program
         linkedList.AddLast("xbx");
     }
 
-    public static bool isPalindrome<T>(LinkedList<T> linkedList)
+    public static bool IsPalindrome<T>(LinkedList<T> linkedList)
     {
-        
+        // are the first and last items the same?
+
+        // if so, move toward the middle 
+
+
+        return true;
     }
 }
 
