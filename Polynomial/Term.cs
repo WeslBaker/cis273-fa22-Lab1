@@ -17,6 +17,7 @@ namespace Polynomial
 			return $"{Coeffecient}x^{Power}";
 		}
 
+		double 
 	}
 }
 

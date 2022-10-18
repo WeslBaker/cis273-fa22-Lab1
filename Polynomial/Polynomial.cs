@@ -15,6 +15,7 @@ namespace Polynomial
 			terms = new LinkedList<Term>();
 
 		}
-	}
+
+
 }
 
