@@ -145,7 +145,26 @@ namespace KthToLast
         // Incomplete
         public void InsertAfter(T newValue, T existingValue)
         {
-            
+            if (Contains(existingValue))
+            {
+                var currentNode = Head;
+
+                //Traverse the list
+                while (currentNode != null)
+                {
+                    if (currentNode.Data.Equals(existingValue))
+                    {
+                        var newNode = new DoublyLinkedListNode<T>(newValue);
+                        newNode.Next = currentNode.Next;
+                        currentNode.Next = newNode;
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public void InsertAt(T value, int index)
@@ -281,7 +300,65 @@ namespace KthToLast
         // Incomplete
         public void RemoveAt(int index)
         {
-            
+            //If list is empty, we're done, son.
+
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            //Remove head
+
+            if (index == 0)
+            {
+
+                //1-element list
+                if (Head == Tail)
+                {
+                    Tail = null;
+                    //Head = null;
+                }
+
+                else
+                {
+                    Head = Head.Next;
+                }
+                length--;
+                return;
+            }
+
+            // Remove non-head node
+
+            var currentNode = Head;
+            int currentIndex = 0;
+
+            while (currentNode != null)
+            {
+                // if you already find the node htat needs to be removed, you cannot change the one before 
+                //you cannot go backwards
+                if (currentNode.Next != null && currentIndex == index - 1)
+                {
+                    var nodeToDelete = currentNode.Next;
+
+                    if (nodeToDelete == Tail)
+                    {
+                        currentNode.Next = null;
+                        Tail = currentNode;
+                    }
+
+                    else
+                    {
+                        currentNode.Next = currentNode.Next.Next;
+
+                        nodeToDelete.Next = null;
+
+                    }
+
+                    return;
+                }
+
+                currentNode = currentNode.Next;
+            }
         }
 
         // Incomplete
@@ -289,7 +366,10 @@ namespace KthToLast
         {
             var reversedList = new LinkedList<T>();
 
-            
+            for (var currentNode = Head; currentNode != null; currentNode = currentNode.Next)
+            {
+                reversedList.Prepend(currentNode.Data);
+            }
 
             return reversedList;
         }

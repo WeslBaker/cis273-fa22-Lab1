@@ -5,21 +5,41 @@ public class Program
 {
     static void Main(string[] args)
     {
-        LinkedList<string> linkedList = new LinkedList<string>();
+        LinkedList<int> doublyLinkedList = new LinkedList<int>();
+        for (int i = -15; i < 16; i++)
+        {
+            doublyLinkedList.AddLast(Math.Abs(i));
+        }
+        var first = doublyLinkedList.First.Value;
 
-        linkedList.AddLast("xbx");
-        linkedList.AddLast("pka");
-        linkedList.AddLast("pka");
-        linkedList.AddLast("xbx");
+        var last = doublyLinkedList.Last.Value;
+        Console.WriteLine(IsPalindrome(doublyLinkedList));
     }
 
     public static bool IsPalindrome<T>(LinkedList<T> linkedList)
     {
-        // are the first and last items the same?
+        // if so, move recursively toward the middle
+        // If false, return false
 
-        // if so, move toward the middle 
-
-
+        //Base case: Length less than 2
+        if (linkedList.Count < 2)
+        {
+            return true;
+        }
+        else
+        // Check if the first and last nodes are the same
+        { 
+            if(linkedList.First.Value.Equals(linkedList.Last.Value))
+            {
+                linkedList.RemoveFirst();
+                linkedList.RemoveLast();
+                IsPalindrome(linkedList);
+            }
+            else
+            {
+                return false;
+            }
+        }
         return true;
     }
 }

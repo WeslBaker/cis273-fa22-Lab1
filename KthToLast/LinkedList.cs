@@ -141,10 +141,28 @@ namespace KthToLast
             return default(T);
         }
 
-        // Incomplete
         public void InsertAfter(T newValue, T existingValue)
         {
+            if(Contains(existingValue))
+            {
+                var currentNode = Head;
 
+                //Traverse the list
+                while(currentNode != null)
+                {
+                    if(currentNode.Data.Equals(existingValue))
+                    {
+                        var newNode = new LinkedListNode<T>(newValue);
+                        newNode.Next = currentNode.Next;
+                        currentNode.Next = newNode;
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public void InsertAt(T value, int index)
@@ -186,9 +204,6 @@ namespace KthToLast
                 currentNode = currentNode.Next;
                 currentIndex++;
             }
-
-            
-           
         }
 
         public void Prepend(T value)
@@ -276,13 +291,68 @@ namespace KthToLast
         // Incomplete
         public void RemoveAt(int index)
         {
-            
+            if (index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            //Handle an empty list
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            //If removing the head
+            if (index == 0)
+            {
+                //1-element list
+                if (Head == Tail)
+                {
+                    Tail = null;
+                    Head = null;
+                }
+                else
+                {
+                    Head = Head.Next;
+                }
+                length--;
+                return;
+            }
+
+            var currentNode = Head;
+            int currentIndex = 0;
+            while (currentNode != null)
+            {
+                if (currentNode.Next != null && currentIndex == index - 1)
+                {
+                    var nodeToDelete = currentNode.Next;
+                    if (nodeToDelete == Tail)
+                    {
+                        currentNode.Next = null;
+                        Tail = currentNode;
+                    }
+                    else
+                    {
+                        currentNode.Next = currentNode.Next.Next;
+                        nodeToDelete.Next = null;
+                    }
+                    length--;
+                    return;
+                }
+                currentNode = currentNode.Next;
+                currentIndex++;
+            }
         }
 
         // Incomplete
         public IList<T> Reverse()
         {
             var reversedList = new LinkedList<T>();
+
+            for(var currentNode = Head; currentNode != null; currentNode = currentNode.Next)
+            {
+                reversedList.Prepend(currentNode.Data);
+            }
 
             return reversedList;
         }
@@ -307,7 +377,23 @@ namespace KthToLast
         // TODO 
         public T KthToLast(int k)
         {
-            return default(T);
+            var currentNode = Head;
+            int currentIndex = 0;
+            if(k >= Length || k < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            while(currentNode != null)
+            {
+                if(currentIndex == Length - k - 1)
+                {
+                    return currentNode.Data;
+                }
+                currentIndex++;
+                currentNode = currentNode.Next;
+            }
+            throw new IndexOutOfRangeException();
         }
     }
 }
